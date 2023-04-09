@@ -1,12 +1,11 @@
 {
   "__evelyn": {
     "balance": 0,
-    "history": [],
-    "settings": [
-      "requests": true,
-      "transactions": true
+    "history": [
+      {"type": "paid", "user": "__evelyn", "amount": 10, "date": 0},
+      {"type": "received", "user": "__evelyn", "amount": 10, "date": 0}
     ],
     "admin": true,
-    "payment-key": "f04c84eed7c9d9ba6b0a1987b3531a54b642253604db0a8004e2c65af9d1ee5d284f6a2de78d0cb64b403c4316f9a4a04dc161449c3872338c8a93e174c8385cd9ccab021f9a67c4ae826eae232314101230ff2f3cb360445ad4d03909751a5a1a3a90f7c69b"
+    "paymentKey": "f04c84eed7c9d9ba6b0a1987b3531a54b642253604db0a8004e2c65af9d1ee5d284f6a2de78d0cb64b403c4316f9a4a04dc161449c3872338c8a93e174c8385cd9ccab021f9a67c4ae826eae232314101230ff2f3cb360445ad4d03909751a5a1a3a90f7c69b"
   }
 }
