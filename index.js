@@ -2,6 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
 
 let URL = 'https://v2.shinies.space/'; // * change on prod
 
@@ -15,6 +16,14 @@ app.use((req, res, next) => {
 
   // TODO: res.render(html);
   // and redirect www.* to non-www
+
+  let data;
+  try {
+    data = jwt.verify(req.cookies.jwt, process.env['SECRET']);
+  } catch (e) {
+    data = null;
+  }
+  res.data = data;
   
   next();
 });
@@ -32,14 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', async (req, res) => {
-  let data;
-  try {
-    data = jwt.verify(req.cookies.jwt, process.env['SECRET']);
-  } catch (e) {
-    data = null;
-  }
-
-  if (data) {
+  if (res.data) {
     res.redirect('/');
   } else {
     if (req.query.privateCode) {
