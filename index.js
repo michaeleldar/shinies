@@ -10,8 +10,19 @@ const app = express();
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.quickRender = (header, content) => {
-    res.send(`<h1>${header}</h1><p>${content}</p>`);
+  res.render = (header, content) => {
+    res.send(`<!DOCTYPE html>
+<html>
+<head>
+<title>${header} | Shinies</title>
+<link rel="icon" type="image/png" href="/static/icon.png">
+<link rel="stylesheet" href="https://unpkg.com/chota@latest">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h1>${header}</h1>
+<p>${content}</p>
+</body>`);
   }
 
   // TODO: res.render(html);
@@ -36,8 +47,10 @@ const cookieOptions = {
   maxAge: 7 * 24 * 3600 * 1000
 }
 
+app.use('/static', express.static(__dirname + '/static/'));
+
 app.get('/', (req, res) => {
-  res.quickRender('Welcome to Shinies!', 'Head over to <a href="/auth">/auth</a> to get started.');
+  res.render('Welcome to Shinies!', 'Head over to <a href="/auth">/auth</a> to get started.');
 });
 
 app.get('/auth', async (req, res) => {
@@ -52,7 +65,7 @@ app.get('/auth', async (req, res) => {
         res.cookie('jwt', token, cookieOptions);
         res.redirect('/');
       } else {
-        res.quickRender('Authentication Failed', 'You can try again <a href="/auth">right here</a>.');
+        res.render('Authentication Failed', 'You can try again <a href="/auth">right here</a>.');
       }
     } else {
       res.redirect(
@@ -71,7 +84,7 @@ app.get('/logout', (req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).quickRender('Oh noes!', 'Seems like our website ran into an error! Please try again in 5 minutes, and contact the owner if it persists.');
+  res.status(500).render('Oh noes!', 'Seems like our website ran into an error! Please try again in 5 minutes, and contact the owner if it persists.');
 });
 
 app.listen(3000, () => {

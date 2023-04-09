@@ -1,0 +1,8 @@
+:root {
+  --color-primary: #1d98f7;
+  --color-secondary: #48a9e5;
+}
+
+h1, p {
+  margin: 0;
+}
